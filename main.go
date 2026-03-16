@@ -17,6 +17,25 @@ type Users []User
 func main() {
 	r := gin.Default()
 
+	r.GET("/auth/login", func(ctx *gin.Context) {
+		var data User
+		ctx.ShouldBindJSON(&data)
+
+		if data.Email == "admin@mail.com" &&
+			data.Password == "1234" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"success": true,
+				"message": "Login success",
+			})
+		} else {
+
+			ctx.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"message": "Wrong username or password",
+			})
+		}
+	})
+
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"success": true,
