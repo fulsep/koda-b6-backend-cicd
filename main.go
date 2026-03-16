@@ -6,6 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type User struct {
+	Id       int    `json:"id"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type Users []User
+
 func main() {
 	r := gin.Default()
 
@@ -14,6 +22,22 @@ func main() {
 			"success": true,
 			"message": "Backend is running well",
 		})
+	})
+
+	r.GET("/users", func(ctx *gin.Context) {
+		users := Users{
+			{
+				Id:       1,
+				Email:    "admin@mail.com",
+				Password: "1234",
+			},
+			{
+				Id:       2,
+				Email:    "guest@mail.com",
+				Password: "1234",
+			},
+		}
+		ctx.JSON(http.StatusOK, users)
 	})
 
 	r.Run(":8888")
