@@ -36,6 +36,12 @@ func main() {
 		}
 	})
 
+	r.GET("/profile", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"success": true,
+		})
+	})
+
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"success": true,
