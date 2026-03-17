@@ -33,7 +33,7 @@ func main() {
 
 	r.Use(corsMiddleware())
 
-	r.GET("/auth/login", func(ctx *gin.Context) {
+	r.POST("/auth/login", func(ctx *gin.Context) {
 		var data User
 		ctx.ShouldBindJSON(&data)
 
