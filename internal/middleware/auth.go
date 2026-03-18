@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"backend/internal/lib"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -14,15 +13,24 @@ func Auth(role string) gin.HandlerFunc {
 		authStr := ctx.GetHeader("Authorization")
 		token, found := strings.CutPrefix(authStr, "Bearer ")
 		valid, payload := lib.VerifyToken(token)
-		if !found || !valid {
+		if !found {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"success": false,
 				"message": "Unauthorized",
 			})
 			return
 		}
-		fmt.Println(payload)
-		ctx.Set("userId", 1)
+
+		if !valid {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"success": false,
+				"message": "Unauthorized",
+			})
+			return
+		}
+
+		userId := payload.(lib.CustomClaims).UserId
+		ctx.Set("userId", userId)
 		ctx.Next()
 	}
 }
