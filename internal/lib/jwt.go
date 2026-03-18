@@ -31,12 +31,12 @@ func GenerateToken(userId int) string {
 }
 
 func VerifyToken(tokenStr string) (bool, any) {
-	token, _ := jwt.ParseWithClaims(tokenStr, &CustomClaims{}, func(t *jwt.Token) (any, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &CustomClaims{}, func(t *jwt.Token) (any, error) {
 		return AppSecret, nil
 	})
 
-	if !token.Valid {
-		return token.Valid, nil
+	if err != nil {
+		return false, nil
 	}
 
 	return token.Valid, token.Claims
