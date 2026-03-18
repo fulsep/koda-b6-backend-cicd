@@ -42,6 +42,7 @@ func (h *ProfileHandler) GetProfile(ctx *gin.Context) {
 }
 
 func (h *ProfileHandler) UpdateProfile(ctx *gin.Context) {
+	Id := ctx.GetInt("userId")
 	data := models.UpdateProfileRequest{}
 
 	if err := ctx.ShouldBindJSON(&data); err != nil {
@@ -53,6 +54,7 @@ func (h *ProfileHandler) UpdateProfile(ctx *gin.Context) {
 	}
 
 	user, err := h.profileService.UpdateProfile(&models.User{
+		Id:       Id,
 		Email:    data.Email,
 		Password: data.Password,
 	})
