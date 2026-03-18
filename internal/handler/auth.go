@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"backend/internal/lib"
 	"backend/internal/models"
 	"backend/internal/services"
 	"fmt"
@@ -46,7 +47,7 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		"success": true,
 		"message": "Login success",
 		"results": gin.H{
-			"token": "abcdef1234567890",
+			"token": lib.GenerateToken(user.Id),
 			"user":  user,
 		},
 	})
