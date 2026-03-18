@@ -2,11 +2,11 @@ FROM golang:1.25.0-alpine AS build
 
 WORKDIR /workspace
 
-COPY *go* .
+COPY . .
 
 RUN go mod tidy
 
-RUN go build -o backend main.go
+RUN go build -o backend cmd/main.go
 
 RUN chmod +x backend
 

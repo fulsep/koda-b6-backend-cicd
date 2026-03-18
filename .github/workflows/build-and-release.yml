@@ -44,6 +44,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd server-irul
-            docker compose pull
-            docker run --rm --network=server-irul_webapps migrate/migrate:latest -source github://fulsep:${{secrets.GITHUB_TOKEN}}@fulsep/koda-b6-db/migration -database postgresql://postgres:1@pg:5432/postgres?sslmode=disable up
+            docker compose pull backend
+            docker run --rm --network=server-irul_webapps migrate/migrate:latest -source github://fulsep:${{secrets.GITHUB_TOKEN}}@fulsep/koda-b6-backend-cicd/migrations -database postgresql://postgres:1@pg:5432/postgres?sslmode=disable up
             docker compose up backend -d
