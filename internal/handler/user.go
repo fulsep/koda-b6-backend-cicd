@@ -30,6 +30,7 @@ func (h *UserHandler) CreateUser(ctx *gin.Context) {
 				"message": "Failed to validate",
 			},
 		)
+		return
 	}
 
 	user, err := h.service.CreateUser(&models.User{
@@ -42,6 +43,7 @@ func (h *UserHandler) CreateUser(ctx *gin.Context) {
 			"success": false,
 			"message": "Failed to create user: " + fmt.Sprintf("%v", err.Error()),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -63,6 +65,7 @@ func (h *UserHandler) UpdateUser(ctx *gin.Context) {
 				"message": "ID format not vaild",
 			},
 		)
+		return
 	}
 
 	var data models.UpdateUserRequest
@@ -74,6 +77,7 @@ func (h *UserHandler) UpdateUser(ctx *gin.Context) {
 				"message": "Failed to validate",
 			},
 		)
+		return
 	}
 
 	user, err := h.service.UpdateUser(&models.User{
@@ -87,6 +91,7 @@ func (h *UserHandler) UpdateUser(ctx *gin.Context) {
 			"success": false,
 			"message": "Failed to update user: " + fmt.Sprintf("%v", err.Error()),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -108,6 +113,7 @@ func (h *UserHandler) DeleteUser(ctx *gin.Context) {
 				"message": "ID format not valid",
 			},
 		)
+		return
 	}
 
 	user, err := h.service.DeleteUser(&models.User{
@@ -119,6 +125,7 @@ func (h *UserHandler) DeleteUser(ctx *gin.Context) {
 			"success": false,
 			"message": "Failed to delete user: " + fmt.Sprintf("%v", err.Error()),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -138,6 +145,7 @@ func (h *UserHandler) GetAllUsers(ctx *gin.Context) {
 			"success": false,
 			"message": "Failed to get all users: " + fmt.Sprintf("%v", err.Error()),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -159,6 +167,7 @@ func (h *UserHandler) GetUserById(ctx *gin.Context) {
 				"message": "ID format not valid",
 			},
 		)
+		return
 	}
 
 	user, err := h.service.GetUserById(&models.User{
@@ -170,6 +179,7 @@ func (h *UserHandler) GetUserById(ctx *gin.Context) {
 			"success": false,
 			"message": "Failed to get user: " + fmt.Sprintf("%v", err.Error()),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
