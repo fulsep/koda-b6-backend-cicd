@@ -14,6 +14,15 @@ func main() {
 	c := di.NewContainer()
 
 	userHandler := c.UserHandler()
+	authHandler := c.AuthHandler()
+
+	main := r.Group("/")
+	{
+		auth := main.Group("/auth")
+		{
+			auth.POST("/login", authHandler.Login)
+		}
+	}
 
 	admin := r.Group("/admin")
 	{

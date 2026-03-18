@@ -16,6 +16,9 @@ type Container struct {
 	userRepo    *repository.UserRepo
 	userService *services.UserService
 	userHandler *handler.UserHandler
+
+	authService *services.AuthService
+	authHandler *handler.AuthHandler
 }
 
 func NewContainer() *Container {
@@ -42,10 +45,17 @@ func (c *Container) initDeps() {
 	c.userService = services.NewUserService(c.userRepo)
 	c.userHandler = handler.NewUserHandler(c.userService)
 
+	c.authService = services.NewAuthService(c.userRepo)
+	c.authHandler = handler.NewAuthHandler(c.authService)
+
 }
 
 func (c *Container) UserHandler() *handler.UserHandler {
 	return c.userHandler
+}
+
+func (c *Container) AuthHandler() *handler.AuthHandler {
+	return c.authHandler
 }
 
 func (c *Container) Close() error {
