@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -30,9 +31,12 @@ func GenerateToken(userId int) string {
 	return ss
 }
 
-func VerifyToken(tokenStr string) (bool, CustomClaims) {
-	token, _ := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
+func VerifyToken(tokenStr string) (bool, any) {
+	token, err := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
 		return AppSecret, nil
 	})
-	return token.Valid, token.Claims.(CustomClaims)
+
+	fmt.Println(err)
+
+	return token.Valid, token.Claims
 }

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"backend/internal/lib"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -20,7 +21,8 @@ func Auth(role string) gin.HandlerFunc {
 			})
 			return
 		}
-		ctx.Set("userId", payload.UserId)
+		fmt.Println(payload)
+		ctx.Set("userId", 1)
 		ctx.Next()
 	}
 }
