@@ -30,9 +30,9 @@ func GenerateToken(userId int) string {
 	return ss
 }
 
-func VerifyToken(tokenStr string) bool {
+func VerifyToken(tokenStr string) (bool, CustomClaims) {
 	token, _ := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
 		return AppSecret, nil
 	})
-	return token.Valid
+	return token.Valid, token.Claims.(CustomClaims)
 }
