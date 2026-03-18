@@ -31,7 +31,7 @@ func GenerateToken(userId int) string {
 }
 
 func VerifyToken(tokenStr string) (bool, any) {
-	token, _ := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
+	token, _ := jwt.ParseWithClaims(tokenStr, &CustomClaims{}, func(t *jwt.Token) (any, error) {
 		return AppSecret, nil
 	})
 
