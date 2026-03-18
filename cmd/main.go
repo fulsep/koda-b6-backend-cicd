@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/internal/di"
+	"backend/internal/middleware"
 	"fmt"
 	"os"
 
@@ -15,12 +16,19 @@ func main() {
 
 	userHandler := c.UserHandler()
 	authHandler := c.AuthHandler()
+	profileHandler := c.ProfileHandler()
 
 	main := r.Group("/")
 	{
 		auth := main.Group("/auth")
 		{
 			auth.POST("/login", authHandler.Login)
+		}
+		profile := main.Group("/profile")
+		profile.Use(middleware.Auth(""))
+		{
+			profile.GET("", profileHandler.GetProfile)
+			profile.PATCH("", profileHandler.UpdateProfile)
 		}
 	}
 
