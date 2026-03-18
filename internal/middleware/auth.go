@@ -29,7 +29,7 @@ func Auth(role string) gin.HandlerFunc {
 			return
 		}
 
-		userId := payload.(lib.CustomClaims).UserId
+		userId := payload.(*lib.CustomClaims).UserId
 		ctx.Set("userId", userId)
 		ctx.Next()
 	}
