@@ -21,7 +21,7 @@ func (r *UserRepo) CreateUser(data *models.User) (*models.User, error) {
 	rows, err := r.db.Query(context.Background(), `
 		INSERT INTO users(email,password) VALUES
 		($1,$2)
-		RETURNING email,password
+		RETURNING id,email,password
 	`, data.Email, data.Password)
 
 	if err != nil {
