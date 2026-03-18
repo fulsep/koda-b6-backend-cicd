@@ -8,10 +8,11 @@ import (
 	"log"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type Container struct {
-	db *pgx.Conn
+	db *pgxpool.Pool
 
 	userRepo    *repository.UserRepo
 	userService *services.UserService
@@ -26,7 +27,8 @@ func NewContainer() *Container {
 	if err != nil {
 		log.Fatalln("Failed to parse DB Config")
 	}
-	db, err := pgx.Connect(context.Background(), cfg.ConnString())
+	// db, err := pgx.Connect(context.Background(), cfg.ConnString())
+	db, err := pgxpool.New(context.Background(), cfg.ConnString())
 	if err != nil {
 		log.Fatalln("Failed to connect to DB")
 	}
@@ -58,6 +60,6 @@ func (c *Container) AuthHandler() *handler.AuthHandler {
 	return c.authHandler
 }
 
-func (c *Container) Close() error {
-	return c.db.Close(context.Background())
+func (c *Container) Close() {
+	c.db.Close()
 }

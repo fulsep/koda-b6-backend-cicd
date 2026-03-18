@@ -5,13 +5,14 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type UserRepo struct {
-	db *pgx.Conn
+	db *pgxpool.Pool
 }
 
-func NewUserRepo(db *pgx.Conn) *UserRepo {
+func NewUserRepo(db *pgxpool.Pool) *UserRepo {
 	return &UserRepo{
 		db: db,
 	}
