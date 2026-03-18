@@ -40,6 +40,7 @@ func (r *UserRepo) CreateUser(data *models.User) (*models.User, error) {
 func (r *UserRepo) GetAllUsers() (*[]models.User, error) {
 	rows, err := r.db.Query(context.Background(), `
 		SELECT id,email,password FROM users
+		ORDER BY id ASC
 	`)
 
 	if err != nil {
